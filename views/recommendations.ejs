@@ -15,7 +15,14 @@
         <div class="movies-grid">
             <% recommendations.forEach(movie => { %>
                 <div class="movie-card">
-                    <h3><%= movie %></h3>
+                    <div class="movie-image">
+                        <img src="<%= movie.poster %>" alt="<%= movie.title %>">
+                    </div>
+                    <div class="movie-info">
+                        <h3><%= movie.title %></h3>
+                        <p><%= movie.overview %></p>
+                        <a href="/video/movie/<%= movie.id %>" class="btn">📽️ פרטים נוספים</a>
+                    </div>
                 </div>
             <% }) %>
         </div>

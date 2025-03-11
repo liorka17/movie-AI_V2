@@ -9,10 +9,10 @@ exports.getRecommendations = async (req, res) => {
             return res.redirect("/login");
         }
 
-        console.log("🔹 משתמש מחובר:", req.user.userId);
+        console.log("🔹 משתמש מחובר:", req.user._id); // שיניתי מ- req.user.userId ל- req.user._id
 
-        // לשלוף את הדירוגים של המשתמש
-        const userRatings = await Rating.find({ userId: req.user.userId });
+        // לשלוף את הדירוגים של המשתמש לפי ה-_id הנכון
+        const userRatings = await Rating.find({ userId: req.user._id });
 
         console.log("🔹 דירוגים קיימים:", userRatings);
 
@@ -30,9 +30,16 @@ exports.getRecommendations = async (req, res) => {
 
         console.log("🔹 המלצות שהתקבלו:", recommendations);
 
-        res.render("recommendations", { recommendations, message: recommendations.length ? "🎬 הנה הסרטים שמבוססים על הדירוגים שלך!" : "⚠️ לא נמצאו המלצות מתאימות." });
+        res.render("recommendations", { 
+            recommendations, 
+            message: recommendations.length ? "🎬 הנה הסרטים שמבוססים על הדירוגים שלך!" : "⚠️ לא נמצאו המלצות מתאימות." 
+        });
+
     } catch (error) {
         console.error("❌ שגיאה בקבלת המלצות:", error);
-        res.status(500).render("recommendations", { recommendations: [], message: "❌ שגיאת שרת - נסה שוב מאוחר יותר." });
+        res.status(500).render("recommendations", { 
+            recommendations: [], 
+            message: "❌ שגיאת שרת - נסה שוב מאוחר יותר." 
+        });
     }
 };

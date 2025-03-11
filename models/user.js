@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
     password: { type: String, required: true },
     token: { type: String,  },
     profilePicture: { type: String, default: '/assets/empty.jpeg' }, // ✅ Profile Picture
-    lastVisitedGames: [{ type: String }], // ✅ Store last visited game IDs
+    //lastVisitedGames: [{ type: String }], // ✅ Store last visited game IDs
     createdAt: { type: Date, default: Date.now }
 });
 
