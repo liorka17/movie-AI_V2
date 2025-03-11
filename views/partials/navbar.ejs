@@ -1,0 +1,18 @@
+<nav class="navbar">
+    <div class="nav-logo">
+        <img src="/images/logo.png" alt="לוגו האתר"> <!-- עדכן את הלוגו לפי הצורך -->
+    </div>
+
+    <div class="nav-links">
+        <a href="/" class="btn">🏠 דף הבית</a>
+        <a href="/video/search" class="btn">🔍 חיפוש סרטים</a>
+
+        <% if (user) { %>
+            <a href="/profile" class="btn">👤 הפרופיל שלי</a>
+            <a href="/user/logout" class="btn">🚪 יציאה</a>
+        <% } else { %>
+            <a href="/login" class="btn">🔑 התחברות</a>
+            <a href="/register" class="btn">📝 הרשמה</a>
+        <% } %>
+    </div>
+</nav>

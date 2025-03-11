@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="he">
+<%- include('partials/head') %> <!-- חיבור ה-HEAD -->
+
+<body>
+    <%- include('partials/navbar') %> <!-- תפריט ניווט -->
+
+    <main class="home-container">
+        <section class="hero">
+            <h1>🎬 ברוך הבא לממליץ הסרטים החכם! 🍿</h1>
+            <p>מצא את הסרט המושלם בשבילך בעזרת AI מתוחכם.</p>
+            <div class="buttons">
+                <a href="/video/search" class="btn">🔍 חיפוש סרטים</a>
+                <a href="/recommendations" class="btn">⭐ המלצות חכמות</a>
+                <a href="/video/gallery" class="btn">🎥 גלריית סרטים</a>
+
+                <% if (user) { %>
+                    <a href="/profile" class="btn profile-btn">👤 הפרופיל שלי</a>
+                <% } else { %>
+                    <a href="/login" class="btn">🔑 התחברות</a>
+                    <a href="/register" class="btn">📝 הרשמה</a>
+                <% } %>
+            </div>
+        </section>
+    </main>
+
+    <%- include('partials/footer') %> <!-- פוטר חדש -->
+</body>
+</html>

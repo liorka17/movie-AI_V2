@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="he">
+<%- include('partials/head') %> <!-- חיבור ה-HEAD -->
+
+<body>
+    <%- include('partials/navbar') %> <!-- תפריט ניווט -->
+
+    <main class="auth-container">
+        <h2>🔑 התחברות</h2>
+        <form action="/user/login" method="POST">
+            <div class="input-group">
+                <label for="email">📧 אימייל:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">🔒 סיסמה:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn">🚀 התחבר</button>
+        </form>
+
+        <p>אין לך חשבון? <a href="/register">הרשמה</a></p>
+    </main>
+
+    <%- include('partials/footer') %> <!-- פוטר -->
+</body>
+</html>

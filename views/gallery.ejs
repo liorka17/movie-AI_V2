@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="he">
+<%- include('partials/head') %>
+
+<body>
+    <%- include('partials/navbar') %>
+
+    <main class="gallery-container">
+        <h1>🎥 סרטים חמים עכשיו</h1>
+        <div class="movies-grid">
+            <% if (movies && movies.length > 0) { %>
+                <% movies.forEach(movie => { %>
+                    <div class="movie-card">
+                        <div class="movie-image">
+                            <img src="https://image.tmdb.org/t/p/w300<%= movie.poster_path %>" alt="<%= movie.title %>">
+                        </div>
+                        <div class="movie-info">
+                            <h3><%= movie.title %></h3>
+                            <a href="/video/movie/<%= movie.id %>" class="btn">📽️ פרטים נוספים</a>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p class="error-message">⚠️ לא נמצאו סרטים.</p>
+            <% } %>
+        </div>
+
+        <div class="pagination">
+            <% if (page > 1) { %>
+                <a href="/video/gallery?page=<%= page - 1 %>" class="page-btn">⬅️ עמוד קודם</a>
+            <% } %>
+        
+            <span class="page-number">עמוד <%= page %></span>
+        
+            <% if (movies.length === 20) { %> 
+                <a href="/video/gallery?page=<%= page + 1 %>" class="page-btn">עמוד הבא ➡️</a>
+            <% } %>
+        </div>
+        
+    </main>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

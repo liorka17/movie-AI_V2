@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="he">
+<%- include('partials/head') %> <!-- חיבור ה-HEAD -->
+
+<body>
+    <%- include('partials/navbar') %> <!-- תפריט ניווט -->
+
+    <main class="profile-container">
+        <h2>👤 הפרופיל שלי</h2>
+
+        <% if (user) { %>
+            <div class="profile-info">
+                <p><strong>שם משתמש:</strong> <%= user.username %></p>
+                <p><strong>אימייל:</strong> <%= user.email %></p>
+            </div>
+        <% } else { %>
+            <p class="error-message">⚠️ עליך להתחבר כדי לצפות בפרופיל.</p>
+            <a href="/login" class="btn">🔑 התחבר</a>
+        <% } %>
+    </main>
+
+    <%- include('partials/footer') %> <!-- פוטר -->
+</body>
+</html>

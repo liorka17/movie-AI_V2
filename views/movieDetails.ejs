@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="he">
+<%- include('partials/head') %>
+
+<body>
+    <%- include('partials/navbar') %>
+
+    <main class="movie-details-container">
+        <h2>🎬 <%= movie.title %></h2>
+
+        <!-- ✅ הצגת הודעה אם יש success=true ב-URL -->
+            <!-- ✅ הצגת הודעה אם המשתנה success קיים -->
+            <% if (success) { %>
+                <div class="success-message">✅ הדירוג נשמר בהצלחה!</div>
+            <% } %>
+
+
+        <div class="movie-content">
+            <img src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
+            
+            <div class="movie-info">
+                <p><strong>תקציר:</strong> <%= movie.overview || "לא נמצא תקציר בעברית." %></p>
+                
+                <% if (trailer) { %>
+                    <iframe width="560" height="315" src="<%= trailer %>" frameborder="0" allowfullscreen></iframe>
+                <% } else { %>
+                    <p>🚫 אין טריילר זמין.</p>
+                <% } %>
+
+                <% if (user) { %>
+                    <form action="/rating/submit" method="POST">
+                        <input type="hidden" name="movieId" value="<%= movie.id %>">
+                        <label for="rating">⭐ דרג את הסרט:</label>
+                        <select name="rating" id="rating">
+                            <option value="1">⭐</option>
+                            <option value="2">⭐⭐</option>
+                            <option value="3">⭐⭐⭐</option>
+                            <option value="4">⭐⭐⭐⭐</option>
+                            <option value="5">⭐⭐⭐⭐⭐</option>
+                        </select>
+
+                        <button type="submit" class="btn">💾 שמור דירוג</button>
+                    </form>
+                <% } else { %>
+                    <p>🔑 עליך להתחבר כדי לדרג סרטים.</p>
+                <% } %>
+            </div>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
+    <script src="/script/rating.js"></script>
+</body>
+</html>

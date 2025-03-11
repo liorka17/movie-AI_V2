@@ -1,0 +1,23 @@
+
+ <!DOCTYPE html>
+<html lang="he">
+<%- include('partials/head') %>
+
+<body>
+    <%- include('partials/navbar') %>
+
+    <main class="search-container">
+        <h1>🔍 חיפוש סרטים</h1>
+        <input type="text" id="searchInput" placeholder="הקלד שם סרט בעברית או באנגלית...">
+        <div id="searchResults" class="movies-grid"></div>
+    </main>
+
+
+
+    <%- include('partials/footer') %>
+
+    <script src="/script/search.js"></script>
+
+
+</body>
+</html> 

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="he">
+<%- include('partials/head') %>
+
+<body>
+    <%- include('partials/navbar') %>
+
+    <main class="recommendation-container">
+        <h1>🎬 המלצות מותאמות עבורך</h1>
+        
+        <% if (message) { %>
+            <p class="info-message"><%= message %></p>
+        <% } %>
+
+        <div class="movies-grid">
+            <% recommendations.forEach(movie => { %>
+                <div class="movie-card">
+                    <h3><%= movie %></h3>
+                </div>
+            <% }) %>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
+</body>
+</html>
