@@ -33,7 +33,7 @@ exports.getRecommendations = async (ratedMovies) => {
         // בדיקה שהתשובה אינה ריקה
         const textResponse = response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
         if (!textResponse || textResponse.trim() === "") {
-            console.error("❌ תשובת Gemini ריקה");
+            console.error("❌ empty gemini res");
             return [];
         }
 

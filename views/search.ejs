@@ -1,5 +1,4 @@
-
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="he">
 <%- include('partials/head') %>
 
@@ -7,15 +6,17 @@
     <%- include('partials/navbar') %>
 
     <main class="search-container">
-        <h1>🔍 חיפוש סרטים</h1>
-        <input type="text" id="searchInput" placeholder="הקלידו שם סרט בעברית או באנגלית">
+        <h1 class="search-title">🔍 חיפוש סרטים</h1>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="הקלידו שם סרט בעברית או באנגלית">
+        </div>
+
         <div id="searchResults" class="movies-grid"></div>
     </main>
 
     <%- include('partials/footer') %>
 
     <script src="/script/search.js"></script>
-
-
 </body>
-</html> 
+</html>

@@ -1,18 +1,15 @@
-<nav class="navbar">
-    <div class="nav-logo">
-        <img src="/images/logo.png" alt="לוגו האתר"> <!-- עדכן את הלוגו לפי הצורך -->
-    </div>
+<nav class="cinema-navbar">
+    <a href="/" class="nav-item">🏠 דף הבית</a>
+    <a href="/video/gallery" class="nav-item">🎞️ גלריית סרטים</a>
+    <a href="/recommendations" class="nav-item">⭐ המלצות</a>
+    <a href="/video/search" class="nav-item">🔍 חיפוש סרטים</a>
+    
 
-    <div class="nav-links">
-        <a href="/" class="btn">🏠 דף הבית</a>
-        <a href="/video/search" class="btn">🔍 חיפוש סרטים</a>
-
-        <% if (user) { %>
-            <a href="/profile" class="btn">👤 הפרופיל שלי</a>
-            <a href="/user/logout" class="btn">🚪 יציאה</a>
-        <% } else { %>
-            <a href="/login" class="btn">🔑 התחברות</a>
-            <a href="/register" class="btn">📝 הרשמה</a>
-        <% } %>
-    </div>
+    <% if (user) { %>
+        <a href="/profile" class="nav-item">🙋‍♂️ הפרופיל שלי</a>
+        <a href="/user/logout" class="nav-item logout-btn">🚪 יציאה</a>
+    <% } else { %>
+        <a href="/login" class="nav-item">🔑 התחברות</a>
+        <a href="/register" class="nav-item">📝 הרשמה</a>
+    <% } %>
 </nav>

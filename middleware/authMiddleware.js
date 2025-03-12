@@ -33,26 +33,3 @@ module.exports = async (req, res, next) => {
     }
 };
 
-module.exports = (req, res, next) => {
-    const token = req.cookies?.token;
-
-    if (!token) {
-        console.log("❌ No token found in request.");
-        res.locals.user = null;
-        return next();
-    }
-
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        console.log("✅ Decoded JWT:", decoded);
-
-        // ✅ Ensure `req.user` is properly set
-        req.user = { userId: decoded.userId };
-        res.locals.user = req.user; // ✅ Available in EJS templates
-        console.log("✅ Middleware assigned user:", req.user);
-    } catch (err) {
-        console.error("❌ Invalid Token:", err.message);
-        res.locals.user = null;
-    }
-    next();
-};
