@@ -64,3 +64,48 @@ exports.searchMovies = async (req, res) => {
 };
 
 
+
+exports.getSiteStats = async () => {
+    try {
+        const TMDB_API_KEY = process.env.TMDB_API_KEY;
+
+        // 🔹 קבלת כמות הסרטים הפופולריים
+        const moviesResponse = await axios.get(
+            `https://api.themoviedb.org/3/movie/popular?api_key=${TMDB_API_KEY}&language=he-IL&page=1`
+        );
+        const totalMovies = moviesResponse.data.total_results || 0;
+
+        // 🔹 הסרט הכי נצפה השבוע
+        const trendingResponse = await axios.get(
+            `https://api.themoviedb.org/3/trending/movie/week?api_key=${TMDB_API_KEY}&language=he-IL`
+        );
+        const topTrendingMovie = trendingResponse.data.results[0] || null;
+
+        // 🔹 הז'אנר הפופולרי ביותר
+        const genresResponse = await axios.get(
+            `https://api.themoviedb.org/3/genre/movie/list?api_key=${TMDB_API_KEY}&language=he-IL`
+        );
+        const genres = genresResponse.data.genres;
+        const genreCounts = {};
+
+        moviesResponse.data.results.forEach(movie => {
+            movie.genre_ids.forEach(genreId => {
+                genreCounts[genreId] = (genreCounts[genreId] || 0) + 1;
+            });
+        });
+
+        const mostPopularGenreId = Object.keys(genreCounts).reduce((a, b) => genreCounts[a] > genreCounts[b] ? a : b);
+        const mostPopularGenre = genres.find(g => g.id == mostPopularGenreId)?.name || "לא ידוע";
+
+        return {
+            totalMovies,
+            topTrendingMovie,
+            mostPopularGenre
+        };
+
+    } catch (error) {
+        console.error("❌ שגיאה בקבלת סטטיסטיקות:", error.message);
+        return { totalMovies: 0, topTrendingMovie: null, mostPopularGenre: "לא ידוע" };
+    }
+};
+

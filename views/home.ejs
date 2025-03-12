@@ -5,6 +5,9 @@
 <body>
     <%- include('partials/navbar') %> <!-- תפריט ניווט -->
 
+<div class="cinema-light"></div>
+
+    
     <main class="home-container">
         <h1 class="cinema-title">🍿 שלום, אני ג'ימי הממליץ שלכם 🎬</h1>
         <p class="cinema-subtitle">מצאתי את הסרטים הכי טובים בשבילכם 🎟️</p>
@@ -14,7 +17,36 @@
             <a href="/video/gallery" class="cinema-button">🎞️ גלריית סרטים</a>
         </div>
 
+        <!-- 🔥 סטטיסטיקות עם אנימציות -->
+        <div class="stats-container">
+            <!-- 🔗 כמות הסרטים באתר - מוביל לגלריית הסרטים -->
+            <a href="/video/gallery" class="stat-box-link">
+                <div class="stat-box">
+                    <h2>🎥 כמות הסרטים באתר</h2>
+                    <p class="stat-number"><%= totalMovies %>+</p>
+                </div>
+            </a>
         
+            <!-- 🔗 הסרט הכי נצפה השבוע - מוביל לעמוד הסרט -->
+            <% if (topTrendingMovie) { %>
+                <a href="/video/movie/<%= topTrendingMovie.id %>" class="stat-box-link">
+                    <div class="stat-box">
+                        <h2>👑 הסרט הכי נצפה השבוע</h2>
+                        <p><%= topTrendingMovie.title %></p>
+                    </div>
+                </a>
+            <% } %>
+        
+            <!-- 🔗 הז'אנר הפופולרי ביותר - מוביל לעמוד חיפוש לפי ז'אנרים -->
+            <a href="/video/genre/<%= mostPopularGenre %>" class="stat-box-link">
+                <div class="stat-box">
+                    <h2>🎭 הז'אנר הפופולרי ביותר</h2>
+                    <p><%= mostPopularGenre %></p>
+                </div>
+            </a>
+        </div>
+        
+        </section>
     </main>
 
     <%- include('partials/footer') %> <!-- פוטר -->
