@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
             searchResults.innerHTML = "";
 
             if (data.results.length === 0) {
-                searchResults.innerHTML = "<p>❌ לא נמצאו סרטים תואמים.</p>";
+                searchResults.innerHTML = "<p>❌ לא נמצאו סרטים תואמים</p>";
                 return;
             }
 
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
         } catch (error) {
-            console.error("❌ שגיאה בחיפוש סרטים:", error);
+            console.error("❌ שגיאה בחיפוש סרטים", error);
         }
     });
 });

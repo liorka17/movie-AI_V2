@@ -45,14 +45,14 @@ exports.getRecommendations = async (ratedMovies) => {
         try {
             parsedResponse = JSON.parse(cleanedResponse);
         } catch (error) {
-            console.error("❌ שגיאה בהמרת JSON:", error.message);
-            console.error("🔹 תשובה שהתקבלה:", cleanedResponse);
+            console.error("❌ Error parsing JSON", error.message);
+            console.error("🔹 Response received ", cleanedResponse);
             return [];
         }
 
         // בדיקה שהתשובה מכילה מערך של סרטים
         if (!parsedResponse.movies || !Array.isArray(parsedResponse.movies)) {
-            console.error("❌ פורמט JSON לא תקין");
+            console.error("❌ Invalid JSON format");
             return [];
         }
 
@@ -67,7 +67,7 @@ exports.getRecommendations = async (ratedMovies) => {
                     poster: `https://image.tmdb.org/t/p/w500${tmdbResponse.data.poster_path}`
                 };
             } catch (err) {
-                console.error(`❌ שגיאה בשליפת תמונה ל-${movie.title}:`, err.message);
+                console.error(`❌ Error fetching image-${movie.title}:`, err.message);
                 return { ...movie, poster: "/assets/default_poster.jpg" };
             }
         }));
@@ -75,7 +75,7 @@ exports.getRecommendations = async (ratedMovies) => {
         return moviesWithImages;
 
     } catch (error) {
-        console.error("❌ שגיאה בקריאה ל-Gemini או TMDB API:", error.message);
+        console.error("❌ Error calling Gemini or TMDB API:", error.message);
         return [];
     }
 };

@@ -36,36 +36,36 @@ exports.register = async (req, res) => {
 };
 
 
-
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(400).json({ message: "Invalid credentials" });
+            return res.render("login", { errorMessage: "❌ כתובת אימייל או סיסמה אינם נכונים" });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.status(400).json({ message: "Invalid credentials" });
+            return res.render("login", { errorMessage: "❌ כתובת אימייל או סיסמה אינם נכונים" });
         }
 
-        // ✅ Store userId inside JWT token
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-            expiresIn: "1h"
-        });
+        // ✅ יצירת טוקן
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
         res.cookie("token", token, { httpOnly: true, secure: false });
 
-        // ✅ Redirect to homepage instead of sending JSON
+        // ✅ הפניה לעמוד הבית
         res.redirect("/");
 
     } catch (error) {
         console.error("❌ Login Error:", error);
-        res.status(500).json({ message: "Server error" });
+        res.render("login", { errorMessage: "❌ Server error - please try again later" });
     }
 };
+
+
+
 
 exports.logout = (req, res) => {
     res.clearCookie("token");

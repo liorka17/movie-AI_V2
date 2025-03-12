@@ -19,19 +19,19 @@
             <img src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
             
             <div class="movie-info">
-                <p><strong>תקציר:</strong> <%= movie.overview || "לא נמצא תקציר בעברית." %></p>
+                <p><strong>תקציר:</strong> <%= movie.overview || "לא נמצא תקציר בעברית" %></p>
                 
                 <% if (trailer) { %>
                     <iframe width="560" height="315" src="<%= trailer %>" frameborder="0" allowfullscreen></iframe>
                 <% } else { %>
-                    <p>🚫 אין טריילר זמין.</p>
+                    <p>🚫 אין טריילר זמין</p>
                 <% } %>
 
                 <% if (user) { %>
                     <form action="/rating/submit" method="POST">
                         <input type="hidden" name="movieId" value="<%= movie.id %>">
-                        <label for="rating">⭐ דרג את הסרט:</label>
-                        <select name="rating" id="rating">
+                        <label for="rating">⭐ דרגו את הסרט וכך תוכלו לקבל המלצות דומות</label>
+                        <select name="rating" id="rating"><br></br>
                             <option value="1">⭐</option>
                             <option value="2">⭐⭐</option>
                             <option value="3">⭐⭐⭐</option>
@@ -42,7 +42,7 @@
                         <button type="submit" class="btn">💾 שמור דירוג</button>
                     </form>
                 <% } else { %>
-                    <p>🔑 עליך להתחבר כדי לדרג סרטים.</p>
+                    <p>🔑 עליך להתחבר כדי לדרג סרטים</p>
                 <% } %>
             </div>
         </div>

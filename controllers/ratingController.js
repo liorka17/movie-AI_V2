@@ -3,15 +3,15 @@ const Rating = require("../models/rating");
 exports.submitRating = async (req, res) => {
     try {
         console.log("🔹 POST /rating/submit called");
-        console.log("📌 נתונים שהתקבלו:", req.body);
-        console.log("📌 משתמש מחובר:", req.user);
+        console.log(" data received ", req.body);
+        console.log("user is login", req.user);
 
         const { movieId, rating } = req.body;
         const userId = req.user?.userId;
 
         if (!movieId || !userId || !rating) {
             console.error("❌ Missing required fields:", { movieId, userId, rating });
-            return res.status(400).send("❌ חסרים נתונים.");
+            return res.status(400).send("❌ Missing required fields");
         }
 
         let existingRating = await Rating.findOne({ movieId, userId });
@@ -28,6 +28,6 @@ exports.submitRating = async (req, res) => {
         res.redirect(`/video/movie/${movieId}?success=true`);
     } catch (error) {
         console.error("❌ Error saving rating:", error);
-        res.status(500).send("שגיאה בשמירת הדירוג.");
+        res.status(500).send("Error saving rating");
     }
 };

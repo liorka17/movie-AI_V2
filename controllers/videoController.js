@@ -16,7 +16,6 @@ exports.getGallery = async (req, res) => {
 
 
 
-
 // ✅ שליפת פרטי סרט לפי ID
 exports.getMovieDetails = async (req, res) => {
     try {
@@ -32,8 +31,13 @@ exports.getMovieDetails = async (req, res) => {
         });
     } catch (error) {
         console.error("❌ Error fetching movie details:", error);
-        res.status(500).send("שגיאה בטעינת פרטי הסרט.");
+        res.status(500).send("שגיאה בטעינת פרטי הסרט");
     }
+};
+
+//פונקציה לנתיב חיפוש
+exports.SearchPage = (req, res) => {
+    res.render("search");
 };
 
 //פונקצית חיפוש
@@ -41,7 +45,7 @@ exports.searchMovies = async (req, res) => {
     try {
         const query = req.query.query;
         if (!query) {
-            return res.status(400).json({ message: "❌ חייב להזין מונח חיפוש." });
+            return res.status(400).json({ message: "❌ חייב להזין מונח חיפוש" });
         }
 
         const response = await axios.get(`https://api.themoviedb.org/3/search/movie`, {
