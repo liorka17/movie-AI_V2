@@ -1,27 +1,29 @@
 <!DOCTYPE html>
-<html lang="he">
-<%- include('partials/head') %> <!-- חיבור ה-HEAD -->
+<html lang="he"> <!-- הגדרת שפת הדף לעברית -->
+<%- include('partials/head') %> <!-- חיבור קובץ ה-HEAD שמכיל את כל הגדרות המטא והסטיילינג -->
 
 <body>
-    <%- include('partials/navbar') %> <!-- תפריט ניווט -->
+    <%- include('partials/navbar') %> <!-- הכנסת קובץ הניווט החיצוני -->
 
-    <main class="profile-container">
-        <div class="profile-box">
-            <h2>👤 הפרופיל שלי</h2>
-            <p class="profile-subtitle">🎟️ הפרטים שלך במערכת</p>
+    <main class="profile-container"> <!-- מיכל ראשי לעמוד הפרופיל -->
+        <div class="profile-box"> <!-- קופסת תצוגת הפרופיל -->
+            <h2>👤 הפרופיל שלי</h2> <!-- כותרת הדף -->
+            <p class="profile-subtitle">🎟️ הפרטים שלך במערכת</p> <!-- תיאור קצר -->
 
-            <div class="profile-info">
-                <p><strong>👤 שם משתמש:</strong> <%= user.username %></p>
-                <p><strong>📧 אימייל:</strong> <%= user.email %></p>
+            <div class="profile-info"> <!-- מיכל מידע המשתמש -->
+                <p><strong>👤 שם משתמש:</strong> <%= user.username %></p> <!-- הצגת שם המשתמש -->
+                <p><strong>📧 אימייל:</strong> <%= user.email %></p> <!-- הצגת כתובת האימייל של המשתמש -->
             </div>
-
-            <!-- <div class="profile-actions">
-                <a href="/edit-profile" class="btn-edit">✏️ עריכת פרופיל</a>
-                <a href="/logout" class="btn-logout">🚪 יציאה</a>
-            </div> -->
         </div>
+            <!-- <div class="profile-actions">  -----לשימוש עתידי
+                <a href="/edit-profile" class="btn-edit">✏️ עריכת פרופיל</a> -----לשימוש עתידי
+                <a href="/logout" class="btn-logout">🚪 יציאה</a> -----לשימוש עתידי
+            </div> -->
     </main>
 
-    <%- include('partials/footer') %> <!-- פוטר -->
+    <%- include('partials/footer') %> <!-- הכנסת קובץ ה-הפוטר החיצוני -->
 </body>
 </html>
+
+
+

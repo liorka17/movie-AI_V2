@@ -6,6 +6,29 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
   },
+
+  "_comments": {
+    "dependencies": "רשימת כל הספריות הדרושות להרצת הפרויקט",
+    "@google/generative-ai": "שימוש ב-Gemini AI להמלצות סרטים",
+    "axios": "שליחת בקשות API (ל-TMDB ול-Gemini)",
+    "bcrypt": "הצפנת סיסמאות (לא חובה, כי משתמשים גם ב-bcryptjs)",
+    "bcryptjs": "גרסה טהורה של bcrypt ל-Node.js",
+    "body-parser": "מעבד נתוני טפסים (מובנה כבר ב-Express 4.16+)",
+    "cookie-parser": "ניהול עוגיות (cookies) בבקשות HTTP",
+    "cors": "מאפשר גישה ממקורות שונים (CORS)",
+    "dotenv": "מאפשר קריאה של משתני סביבה מקובץ `.env`",
+    "ejs": "מנוע תבניות ליצירת עמודי HTML דינמיים",
+    "express": "מסגרת העבודה של השרת המרכזי",
+    "express-session": "ניהול Session למשתמשים",
+    "jsonwebtoken": "יצירה ואימות של JWT (טוקן התחברות)",
+    "method-override": "מאפשר שימוש בבקשות `PUT` ו-`DELETE` בטפסים HTML",
+    "mongoose": "ORM לניהול מסד הנתונים MongoDB",
+    "mongosh": "כלי לניהול ידני של מסד הנתונים MongoDB",
+    "morgan": "רישום לוגים של בקשות HTTP",
+    "nodemon": "מאפשר רענון אוטומטי של השרת בעת שינוי קובץ",
+    "openai": "עבודה עם OpenAI (אם משתמשים ב-Gemini בלבד, אפשר להסיר)"
+  },
+
   "keywords": [],
   "author": "",
   "license": "ISC",

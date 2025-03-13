@@ -1,73 +1,72 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const User=require('../models/user');
+const bcrypt = require("bcryptjs"); // מייבא את bcryptjs לצורך הצפנת סיסמאות
+const jwt = require("jsonwebtoken"); // מייבא את jsonwebtoken לצורך יצירת אסימוני זיהוי (JWT)
+const User = require('../models/user'); // מייבא את מודל המשתמשים ממסד הנתונים
 
+// פונקציה זו מבצעת רישום משתמש חדש, מצפינה את הסיסמה, שומרת את המשתמש ויוצרת עבורו אסימון זיהוי (JWT).
 exports.register = async (req, res) => {
     try {
-        const { username, email, password } = req.body;
+        const { username, email, password } = req.body; // קולט את הנתונים שנשלחו מהטופס
 
-        let user = await User.findOne({ email });
-        if (user) {
-            return res.status(400).render("register", { error: "User already exists", user: null });
+        let user = await User.findOne({ email }); // מחפש אם המשתמש כבר קיים במסד הנתונים
+        if (user) { // אם המשתמש כבר רשום
+            return res.status(400).render("register", { error: "User already exists", user: null }); // מציג הודעת שגיאה
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10); // מצפין את הסיסמה עם רמת הצפנה 10
 
-        // ✅ Save user first (without token)
-        user = new User({ username, email, password: hashedPassword });
-        await user.save();
+        user = new User({ username, email, password: hashedPassword });//שומר את המשתמש במסד הנתונים (ללא אסימון בשלב זה)
+        await user.save(); // שומר את המשתמש במסד הנתונים
 
-        // ✅ Generate token AFTER user is saved to get the correct `_id`
+        //  יוצר אסימון זיהוי (ג'יידבליוטי) לאחר שהמשתמש נשמר כדי לקבל את ה-איידי הנכון
         const token = jwt.sign({ userId: user._id.toString() }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
-        // ✅ Update user with the correct token
-        user.token = token;
-        await user.save();
+        user.token = token; //  מעדכן את המשתמש עם האסימון הנכון
 
-        // ✅ Set the token in the cookie immediately
-        res.cookie("token", token, { httpOnly: true });
+        await user.save(); // שומר את השינוי במסד הנתונים
 
-        console.log("✅ User registered and authenticated:", user);
-        res.redirect("/");
-    } catch (error) {
-        console.error("❌ Error in register:", error);
-        res.status(500).render("register", { error: "Server error", user: null });
+        res.cookie("token", token, { httpOnly: true });//  שומר את האסימון בעוגיה באופן מיידי
+
+        console.log("✅ User registered and authenticated:", user); // מדפיס ללוג שהרישום הצליח
+        res.redirect("/"); // מפנה את המשתמש לדף הבית לאחר ההרשמה
+    } catch (error) { 
+        console.error("❌ Error in register:", error); // מציג שגיאה במקרה של כישלון
+        res.status(500).render("register", { error: "Server error", user: null }); // מציג הודעת שגיאה למשתמש
     }
 };
 
 
+// פונקציה זו מטפלת בתהליך ההתחברות של המשתמש. היא בודקת אם כתובת האימייל והסיסמה תקינים
+// ואם כן, היא יוצרת אסימון זיהוי (ג'יידבליוטי) ושומרת אותו בעוגיה
 exports.login = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password } = req.body; // מקבל את האימייל והסיסמה מגוף הבקשה
 
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.render("login", { errorMessage: "❌ כתובת אימייל או סיסמה אינם נכונים" });
+        const user = await User.findOne({ email }); // מחפש את המשתמש במסד הנתונים לפי האימייל
+        if (!user) { // אם המשתמש לא נמצא
+            return res.render("login", { errorMessage: "❌ כתובת אימייל או סיסמה אינם נכונים" }); // מחזיר הודעת שגיאה
         }
 
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.render("login", { errorMessage: "❌ כתובת אימייל או סיסמה אינם נכונים" });
+        const isMatch = await bcrypt.compare(password, user.password); // משווה את הסיסמה שהוזנה לסיסמה המוצפנת במסד הנתונים
+        if (!isMatch) { // אם הסיסמה שגויה
+            return res.render("login", { errorMessage: "❌ כתובת אימייל או סיסמה אינם נכונים" }); // מחזיר הודעת שגיאה
         }
+    
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });// יצירת טוקן
 
-        // ✅ יצירת טוקן
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+        res.cookie("token", token, { httpOnly: true, secure: false }); // שומר את האסימון בעוגיה
 
-        res.cookie("token", token, { httpOnly: true, secure: false });
+        //  הפניה לעמוד הבית
+        res.redirect("/"); // מעביר את המשתמש לדף הבית לאחר התחברות מוצלחת
 
-        // ✅ הפניה לעמוד הבית
-        res.redirect("/");
-
-    } catch (error) {
-        console.error("❌ Login Error:", error);
-        res.render("login", { errorMessage: "❌ Server error - please try again later" });
+    } catch (error) { 
+        console.error("❌ Login Error:", error); // מציג שגיאה במקרה של בעיה בתהליך ההתחברות
+        res.render("login", { errorMessage: "❌ Server error - please try again later" }); // מציג שגיאת שרת למשתמש
     }
 };
 
 
-
-
+// פונקציה זו מטפלת בהתנתקות המשתמש.  מוחקת את העוגיה המכילה את הטוקן ומפנה לעמוד הבית
 exports.logout = (req, res) => {
-    res.clearCookie("token");
-    res.redirect("/");
+    res.clearCookie("token"); // מוחק את העוגיה שמכילה את הטוקן
+    res.redirect("/"); // מפנה את המשתמש לדף הבית לאחר ההתנתקות
 };

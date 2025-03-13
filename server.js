@@ -2,7 +2,7 @@ require('dotenv').config(); // טוען את משתני הסביבה מקובץ 
 
 const app = require('./app'); // טוען את קובץ האפליקציה הראשי app.js
 
-const PORT = process.env.PORT || 5000; // קובע את מספר הפורט, כברירת מחדל 5000 אם לא מוגדר בקובץ .env
+const PORT = process.env.PORT || 5000; // קובע את מספר הפורט, כברירת מחדל 5000 אם לא מוגדר בקובץ .אי.אנ.בי
 
 // הפעלת השרת עם טיפול בשגיאות
 app.listen(PORT, () => {

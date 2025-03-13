@@ -1,15 +1,14 @@
-const express = require("express");
-const router = express.Router();
-const{HomePage,RegisterPage,LoginPage} = require("../controllers/viewController");
+const express = require("express"); // מייבא את אקספרס לצורך ניתוב
+const router = express.Router(); // יוצר אובייקט ניתוב
+const { HomePage, RegisterPage, LoginPage } = require("../controllers/viewController"); // מייבא את בקרת התצוגות
 
-// דף הבית
-router.get("/", HomePage);
+// נתיב להצגת דף הבית
+router.get("/", HomePage); 
 
-// דף הרשמה
-router.get("/register", RegisterPage);
+// נתיב להצגת דף ההרשמה
+router.get("/register", RegisterPage); 
 
-// דף התחברות
-router.get("/login", LoginPage);
+// נתיב להצגת דף ההתחברות
+router.get("/login", LoginPage); 
 
-
-module.exports = router;
+module.exports = router; // מייצא את הנתיבים לשימוש בקובצי ניתוב אחרים
